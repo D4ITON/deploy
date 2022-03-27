@@ -4,6 +4,16 @@ const path = require("path");
 require("dotenv").config();
 const BASH_FILE = process.env.BASH_FILE;
 const PORT = process.env.PORT;
+const TITLE = process.env.TITLE;
+
+// https://stackoverflow.com/a/30360821/9868383
+function setTerminalTitle(title) {
+  process.stdout.write(
+    String.fromCharCode(27) + "]0;" + title + String.fromCharCode(7)
+  );
+}
+
+setTerminalTitle(TITLE);
 
 const app = express();
 app.use(express.json());
