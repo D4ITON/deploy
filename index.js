@@ -18,29 +18,27 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  const protocol = req.protocol;
-  const host = req.get("host");
-
-  const template = `
-        <code>deploy</code><br>
-        <code>------</code><br>
-        <code>curl -X POST ${protocol}://${host}/</code><br>
-        <code>@dalthonmh</code>`;
-  res.send(template);
-});
-
-app.post("/", (req, res) => {
   try {
+    const protocol = req.protocol;
+    const host = req.get("host");
     const { bash = "" } = req.query;
 
     if (!bash) {
-      res.send("Missing bashname parameter");
+      const template = `
+        <code>deploy</code><br>
+        <code>------</code><br>
+        <code>curl ${protocol}://${host}/?bash=bashname.sh</code><br>
+        <code>@dalthonmh</code>`;
+      res.send(template);
+
       return;
     }
 
     const PATH_FILEBASH = path.resolve(__dirname, bash);
     shell.exec(PATH_FILEBASH);
-    res.send("End call " + bash);
+    res.send(
+      `Fin de llamado de: ${bash} <br><a href='${protocol}://${host}'>Regresar</a>`
+    );
   } catch (error) {
     console.log(error);
     return res.status(500).send({
