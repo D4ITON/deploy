@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
     const PATH_FILEBASH = path.resolve(__dirname, bash);
     shell.exec(PATH_FILEBASH);
     res.send(
-      `Fin de llamado de: ${bash} <br><a href='${protocol}://${host}'>Regresar</a>`
+      `Fin de ejecución de: ${bash} <br><a href='${protocol}://${host}'>Regresar</a>`
     );
   } catch (error) {
     console.log(error);
